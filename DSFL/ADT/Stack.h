@@ -10,7 +10,7 @@
 
 #include "LinkedList.h"
 
-class StackunderflowExc{};
+class StackUnderflowExc{};
 class Stack {
 	myLinkedList ll;
 public:

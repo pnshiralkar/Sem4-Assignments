@@ -20,7 +20,7 @@ bool Stack::isEmpty()
 int Stack::pop()
 {
 	if(isEmpty())
-		throw StackunderflowExc();
+		throw StackUnderflowExc();
 	int n = ll.head->val;
 	ll.del(0);
 	return n;
@@ -29,6 +29,6 @@ int Stack::pop()
 int Stack::top()
 {
 	if(isEmpty())
-		throw StackunderflowExc();
+		throw StackUnderflowExc();
 	return ll.head->val;
 }
