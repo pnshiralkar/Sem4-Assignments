@@ -1,5 +1,5 @@
 #include <bits/stdc++.h>
-#include "ADT/Stack.h"
+#include "Stack.h"
 
 using namespace std;
 
@@ -8,11 +8,11 @@ int prec[128]={0};
 string inToPost(string in, bool gte=true)
 {
 	char post[in.length()];
-	Stack st;
+	Stack<int> st;
 	int j=0;
 	for(int i=0;i<in.length();i++)
 	{
-		if(('a' <= in[i] && in[i] <= 'z') || ('A' <= in[i] && in[i] <= 'Z'))
+		if(('a' <= in[i] && in[i] <= 'z') || ('A' <= in[i] && in[i] <= 'Z') || ('0' <= in[i] && in[i] <= '9'))
 		{
 			post[j++] = in[i];
 		}
@@ -26,7 +26,7 @@ string inToPost(string in, bool gte=true)
 			{
 				cout<<"Invalid expression" <<post;
 			}
-			
+
 		}
 		else
 		{
@@ -60,6 +60,41 @@ string inToPre(string in)
 	return pre;
 }
 
+int oper(int a, int b, char op)
+{
+	switch(op)
+	{
+	case '+':
+		return a+b;
+		break;
+	case '-':
+		return a-b;
+		break;
+	case '*':
+		return a*b;
+		break;
+	case '/':
+		return a/b;
+		break;
+	case '^':
+		return a^b;
+		break;
+	}
+}
+
+int evalPost(string post)
+{
+	Stack<int> es;
+	for(int i=0;i<post.length();i++)
+	{
+		if('0' <= post[i] && post[i] <= '9')
+			es.push(post[i] - '0');
+		else
+			es.push(oper(es.pop(), es.pop(), post[i]));
+	}
+	return es.pop();
+}
+
 void initPrec()
 {
 	prec['+']=1;
@@ -70,12 +105,18 @@ void initPrec()
 }
 
 int main()
-{	
+{
 	initPrec();
-	string inp;
+	string inp,post;
 	cout << "Enter expression : ";
 	cin >> inp;
-	cout << "Postfix is : " << inToPost(inp) << endl;
+	post = inToPost(inp);
+	cout << "Postfix is : " << post << endl;
 	cout << "Prefix is : " << inToPre(inp) << endl;
+
+
+	if('0' <= post[0] && post[0] <= '9')
+		cout << "Evaluation is : " << evalPost(post) << endl;
+
 	return 0;
 }

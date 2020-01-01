@@ -12,27 +12,26 @@
 
 using namespace std;
 
+template<class T>
 class Node{
 	public:
-	int val;
+	T val;
 	Node *nxt;
 };
 
 class InvalidPosExc{};
+
+template <typename T1>
 class myLinkedList{
-	Node *head;
 	public:
+	Node<T1> *head;
 	myLinkedList()
 	{
 		head = NULL;
 	}
-	void insert(int val);
-	void insert(int pos, int val);
+	void insert(T1 val);
+	void insert(int pos, T1 val);
 	void del(int pos);
-	friend ostream& operator <<(ostream& out, myLinkedList ll);
-	friend class Stack;
 };
-
-#include "LinkedList.cpp"
 
 #endif /* LINKEDLIST_H_ */

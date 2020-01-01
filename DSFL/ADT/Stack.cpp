@@ -7,28 +7,35 @@
 
 #include "Stack.h"
 
-void Stack::push(int n)
+template <class T>
+void Stack<T>::push(T n)
 {
 	ll.insert(0,n);
 }
 
-bool Stack::isEmpty()
+template <class T>
+bool Stack<T>::isEmpty()
 {
 	return ll.head == NULL;
 }
 
-int Stack::pop()
+template <class T>
+T Stack<T>::pop()
 {
 	if(isEmpty())
 		throw StackUnderflowExc();
-	int n = ll.head->val;
+	T n = ll.head->val;
 	ll.del(0);
 	return n;
 }
 
-int Stack::top()
+template <class T>
+T Stack<T>::top()
 {
 	if(isEmpty())
 		throw StackUnderflowExc();
 	return ll.head->val;
 }
+
+template class Stack<int>;
+template class Stack<char>;
