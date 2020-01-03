@@ -10,17 +10,16 @@
 
 #include "LinkedList.h"
 
-class StackunderflowExc{};
+class StackUnderflowExc{};
+
+template <class T>
 class Stack {
-	myLinkedList ll;
+	myLinkedList<T> ll;
 public:
-	void push(int);
-	int pop();
-	int top();
+	void push(T);
+	T pop();
+	T top();
 	bool isEmpty();
 };
-
-
-#include "Stack.cpp"
 
 #endif /* STACK_H_ */
