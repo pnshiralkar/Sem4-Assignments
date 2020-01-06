@@ -6,6 +6,7 @@
  */
 
 #include "Stack.h"
+#include "Node.cpp"
 #include<iostream>
 void Stack::push(int n)
 {

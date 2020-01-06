@@ -151,7 +151,6 @@ int main()
 			case 4:
 				cout<<"\nEnter the expression: ";
 				cin>>s1;
-				cout<<"\nInfix expression: "<<s1;
 				cout <<"\n\n\n PostFix Version: "<<infixToPostfix(s1)<<endl;
 				break;
 			case 5:

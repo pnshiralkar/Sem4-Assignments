@@ -21,6 +21,6 @@ public:
 };
 
 
-
+#include "Stack.cpp"
 
 #endif /* STACK_H_ */
