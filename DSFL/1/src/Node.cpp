@@ -1,17 +1,16 @@
 /*
- * LinkedList.cpp
+ * Node.cpp
  *
- *  Created on: 23-Dec-2019
- *      Author: pict
+ *  Created on: 30-Dec-2019
+ *      Author: dsflh-10
  */
 
-#include "LinkedList.h"
+#include "Node.h"
+#include<iostream>
 
-
-template <typename T1>
-void myLinkedList<T1>::insert(T1 val)
+void List::insert(int val)
 {
-	Node<T1> *n = new Node<T1>, *tmp=head;
+	Node *n = new Node, *tmp=head;
 	n->val = val;
 	n->nxt=NULL;
 	if(head)
@@ -24,14 +23,12 @@ void myLinkedList<T1>::insert(T1 val)
 		head=n;
 }
 
-template <typename T1>
-void myLinkedList<T1>::insert(int pos, T1 val)
+void List::insert(int pos, int val)
 {
 	if(!head && pos){
 		throw InvalidPosExc();
-		return;
 	}
-	Node<T1> *n = new Node<T1>, *tmp=head;
+	Node *n = new Node, *tmp=head;
 	n->val = val;
 	if(!pos)
 	{
@@ -52,15 +49,15 @@ void myLinkedList<T1>::insert(int pos, T1 val)
 	tmp->nxt = n;
 }
 
-template <typename T1>
-void myLinkedList<T1>::del(int pos)
+void List::del(int pos)
 {
-	Node<T1> *tmp = head, *tmp1;
+	Node *tmp = head, *tmp1;
 	if(!pos)
 	{
 		head=head->nxt;
 		delete tmp;
 		return;
+
 	}
 	int i=0;
 	while(tmp!=NULL && i<pos-1){
@@ -78,14 +75,9 @@ void myLinkedList<T1>::del(int pos)
 }
 
 
-
-
-
-
-
-
-template class myLinkedList<int>;
-template class myLinkedList<char>;
-template class myLinkedList<float>;
-template class myLinkedList<double>;
-template class myLinkedList<string>;
+ostream& operator <<(ostream& out, List ll)
+{
+	for(Node *tmp = ll.head;tmp!=NULL;tmp=tmp->nxt)
+		out << tmp->val << " ";
+	return out;
+}

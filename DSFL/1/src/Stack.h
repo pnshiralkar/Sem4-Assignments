@@ -8,18 +8,19 @@
 #ifndef STACK_H_
 #define STACK_H_
 
-#include "LinkedList.h"
+#include "Node.h"
 
-class StackUnderflowExc{};
-
-template <class T>
+class StackunderflowExc{};
 class Stack {
-	myLinkedList<T> ll;
+	List ll;
 public:
-	void push(T);
-	T pop();
-	T top();
+	void push(int);
+	int pop();
+	int top();
 	bool isEmpty();
 };
+
+
+
 
 #endif /* STACK_H_ */
