@@ -53,14 +53,15 @@ void myLinkedList<T1>::insert(int pos, T1 val)
 }
 
 template <typename T1>
-void myLinkedList<T1>::del(int pos)
+T1 myLinkedList<T1>::del(int pos)
 {
 	Node<T1> *tmp = head, *tmp1;
 	if(!pos)
 	{
 		head=head->nxt;
+		T1 data = tmp->val;
 		delete tmp;
-		return;
+		return data;
 	}
 	int i=0;
 	while(tmp!=NULL && i<pos-1){
@@ -69,12 +70,14 @@ void myLinkedList<T1>::del(int pos)
 	}
 	if((tmp==NULL && i<pos) || tmp->nxt==NULL){
 		throw InvalidPosExc();
-		return;
 	}
 	tmp1 = tmp;
 	tmp=tmp->nxt;
 	tmp1->nxt = tmp->nxt;
+
+	T1 data = tmp->val;
 	delete tmp;
+	return data;
 }
 
 template <typename T1>

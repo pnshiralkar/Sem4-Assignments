@@ -31,7 +31,7 @@ class myLinkedList{
 	}
 	void insert(T1 val);
 	void insert(int pos, T1 val);
-	void del(int pos);
+	T1 del(int pos);
 	void display();
 };
 
