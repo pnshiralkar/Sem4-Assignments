@@ -11,11 +11,35 @@
 #include<iostream>
 
 class linkedList {
-	int item;
-	linkedList head;
 public:
-	linkedList();
-	virtual ~linkedList();
+	int val;
+	int priority;
+	linkedList *nxt;
+	char name[25];
+	int age;
+
+friend class List;
+
 };
+
+
+class InvalidPosExc{};
+
+class List{
+	public:
+	linkedList *head;
+	List()
+	{
+		head = NULL;
+	}
+	 void insert(int val);
+	 void insert(int priority, int val);
+	 int del();
+	 void display();
+	 int peek();
+	 int isEmpty();
+	friend class Queue;
+};
+
 
 #endif /* LINKEDLIST_H_ */
