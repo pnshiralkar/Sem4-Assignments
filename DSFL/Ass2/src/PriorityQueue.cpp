@@ -16,18 +16,12 @@ template <class T>
 void PriorityQueue<T>::enqueue(T data, int priority)
 {
 	int i=0;
-	for(Node< NodePQ<T> > *t=ll.head;t && t->nxt;t=t->nxt)
+	for(Node< NodePQ<T> > *t=ll.head;t;t=t->nxt)
 	{
 		if(priority <= t->val.priority){
 			break;
 		}
 		i++;
-	}
-	if(ll.head && !(ll.head->nxt)){ // not going inside this.
-		if(priority > ll.head->val.priority){
-			ll.insert(1, NodePQ<T>(data, priority));
-			return;
-		}
 	}
 	ll.insert(i, NodePQ<T>(data, priority));
 	size++;
@@ -56,6 +50,5 @@ T PriorityQueue<T>::rear()
 template <class T>
 void PriorityQueue<T>::disp()
 {
-//	cout << ll.head->val.data;
 	ll.display();
 }

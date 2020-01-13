@@ -84,7 +84,7 @@ template <typename T1>
 void myLinkedList<T1>::display()
 {
 	for(Node<T1> *tmp = head;tmp!=NULL;tmp=tmp->nxt)
-		cout << tmp->val << " ";
+		cout << tmp->val;
 }
 
 
