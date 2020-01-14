@@ -11,6 +11,7 @@ public:
 template <class T>
 class BinTree{
 	Node<T> *head = NULL;
+	Node<T> *h;
 public:
 	void create()
 	{
@@ -67,11 +68,11 @@ public:
 	{
 		if(!curr)
 		return 0;
-		if(curr->left || curr->right)
+		if(curr->left==NULL && curr->right==NULL)
 		{
-			return (clrec(curr->left) + clrec(curr->right));
-		}
 		return 1;
+		}
+		return (clrec(curr->left) + clrec(curr->right));
 	}
 
 	void dispLeaf()
@@ -90,14 +91,36 @@ public:
 		dlrec(curr->left);
 		dlrec(curr->right);
 	}
+
+	Node<T>* copy(Node<T> *curr)
+	{
+		if(!curr)
+			return NULL;
+		Node<T> *newNode = new Node<T>;
+		newNode->val = curr->val;
+		newNode->left = copy(curr->left);
+		newNode->right = copy(curr->right);
+		return newNode;
+	}
+	
+	void abc()
+	{
+		h = copy(head);
+		prerec(h);
+	}
+	
 };
 
 int main() {
-	BinTree<int> bt;
+	BinTree<int> bt,bt2;
 	bt.create();
 	bt.dispPreorder();
 	cout << "\n\n Leaf nodes : " << bt.countLeaf() << endl;
 	bt.dispLeaf();
+
+	cout << "Copied tree : ";
+	bt.abc();
+
 	return 0;
 }
 //23254: Binary Tree Operations [ Count leaf nodes, Make a copy of a tree ]
