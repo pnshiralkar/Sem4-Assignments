@@ -10,8 +10,7 @@
 	msg2 db 10, 13, 10, 13, 'String is : $'
 	msg3 db 10, 13, 10, 13, 'Given strings are equal$'
 	msg4 db 10, 13, 10, 13, 'Given strings are not equal$'
-	;msg4 db 10, 13, 10, 13, 'Reverse : $'
-	msg5 db 10, 13, 10, 13, 'The given string is a palindrome$'
+	msg5 db 10, 13, 10, 13, 'Concatenated string is : $'
 	msg6 db 10, 13, 10, 13, 'The given string is not a palindrome$'
 	menures db ?
 	res1 db 80 dup(?)
@@ -101,8 +100,8 @@
 	int 21h
 	cmp al, 31h
 	je compstr
-;	cmp al, 32h
-;	je rev
+	cmp al, 32h
+	je concat
 ;	cmp al, 33h
 ;	je cpal
 	jmp progend
@@ -136,6 +135,35 @@
 	mov ah, 09h
 	int 21h
 	jmp menuloop
+	
+;	---Concat---
+	concat:
+	lea si, res2
+	lea di, res1
+	add di, len1
+	mov cx, len2
+	loopcc:
+	mov al, [si]
+	mov [di], al
+	inc si
+	inc di
+	dec cx
+	jnz loopcc
+	
+	mov al, '$'
+	mov [di], al
+	
+	mov dx, offset msg5
+	mov ah, 09h
+	int 21h
+	
+	mov dx, offset res1
+	mov ah, 09h
+	int 21h
+	
+	jmp menuloop
+	
+	
 	
 	progend:
 	
