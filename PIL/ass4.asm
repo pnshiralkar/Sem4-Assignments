@@ -1,5 +1,8 @@
-; Write alp to find and display length of string
-
+strprint macro str
+	mov dx, offset str
+	mov ah, 09h
+	int 21h
+endm
 
 .model small
 .stack 100h
@@ -12,21 +15,23 @@
 	msg4 db 10, 13, 10, 13, 'Given strings are not equal$'
 	msg5 db 10, 13, 10, 13, 'Concatenated string is : $'
 	msg6 db 10, 13, 10, 13, 'The given string is not a palindrome$'
+	msg7 db 10, 13, 10, 13, 'Occurences of string2 in string1 are : $'
 	menures db ?
 	res1 db 80 dup(?)
 	res2 db 80 dup(?)
 	newline db 10, 13, '$'
 	len1 dw 00h
 	len2 dw 00h
+	occ dw 00h
+	siw dw ?
+	diw dw ?
 .code
 ;	---Init data seg---
 	mov ax, @data
 	mov ds, ax
 	
 ;	---print enter str---
-	mov dx, offset msg11
-	mov ah, 09h
-	int 21h
+	strprint msg11
 	lea si, res1
 	mov ah, 01h
 	
@@ -47,19 +52,13 @@
 	mov [si], al
 	
 ;	---Print string is : ---
-	mov dx, offset msg2
-	mov ah, 09h
-	int 21h
+	strprint msg2
 	
 ;	---Print the string---
-	mov dx, offset res1
-	mov ah, 09h
-	int 21h
+	strprint res1
 	
 ;	---print enter str---
-	mov dx, offset msg12
-	mov ah, 09h
-	int 21h
+	strprint msg12
 	lea si, res2
 	mov ah, 01h
 	
@@ -80,21 +79,15 @@
 	mov [si], al
 	
 ;	---Print string is : ---
-	mov dx, offset msg2
-	mov ah, 09h
-	int 21h
+	strprint msg2
 	
 ;	---Print the string---
-	mov dx, offset res2
-	mov ah, 09h
-	int 21h;
+	strprint res2
 	
 	
 ;	------ Menu driven ------
 	menuloop:
-	mov dx, offset menu
-	mov ah, 09h
-	int 21h
+	strprint menu
 	
 	mov ah, 01h
 	int 21h
@@ -102,8 +95,8 @@
 	je compstr
 	cmp al, 32h
 	je concat
-;	cmp al, 33h
-;	je cpal
+	cmp al, 33h
+	je occs
 	jmp progend
 	
 	
@@ -125,15 +118,11 @@
 	dec cx
 	jnz loopcs
 	
-	mov dx, offset msg3
-	mov ah, 09h
-	int 21h
+	strprint msg3
 	jmp menuloop
 	
 	strne:
-	mov dx, offset msg4
-	mov ah, 09h
-	int 21h
+	strprint msg4
 	jmp menuloop
 	
 ;	---Concat---
@@ -153,17 +142,57 @@
 	mov al, '$'
 	mov [di], al
 	
-	mov dx, offset msg5
-	mov ah, 09h
-	int 21h
+	mov ax, len1
+	add ax, len2
+	mov len1, ax
 	
-	mov dx, offset res1
-	mov ah, 09h
-	int 21h
+	strprint msg5
+	
+	strprint res1
 	
 	jmp menuloop
 	
+;	---Occurences--	
 	
+	occs:
+	lea si, res1
+	lea di, res2
+	mov cx, len1
+	mov occ, 00h
+	
+	ocl1:
+		mov siw, si
+		mov diw, di
+		mov bx, len2
+		ocl2:
+			mov al, [si]
+			mov ah, [di]
+			cmp al, ah
+			jne noocc
+			inc si
+			inc di
+			dec bx
+			cmp bx, 00h
+		jne ocl2
+		mov bx, occ
+		inc bx
+		mov occ, bx
+		
+		noocc:
+		mov si, siw
+		mov di, diw
+		inc si
+		dec cx
+	jnz ocl1
+	
+	strprint msg7
+	
+	mov dx, occ
+	add dx, 30h
+	mov ah, 02h
+	int 21h
+	
+	jmp menuloop
 	
 	progend:
 	

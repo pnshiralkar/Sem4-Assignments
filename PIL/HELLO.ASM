@@ -1,13 +1,18 @@
 .model small
 .stack 100h
+
+init macro
+	mov ax, @data
+	mov ds, ax
+endm
+	
 .data
         abc db 'Hello World!', 10, '$'
         pict db 'PICT, Pune', 13, 10, '$'
         a db 3
         b db 2
 .code
-	mov ax, @data
-	mov ds, ax
+	init
 	
 	mov ah, 09h
         mov dx, offset abc
