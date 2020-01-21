@@ -28,7 +28,7 @@ mnotequal db ,13,10,"String are not equal$"
 mlength1 db ,13,10,"Length of first String: $"
 mlength2 db ,13,10,"Length of second string: $"
 
-error db ,13,10,"Enter the valid choice!!"
+error db ,13,10,"Enter the valid choice!!$",13,10,"$"
 
 .code   
 
@@ -109,7 +109,6 @@ start:
 
               mov cl,str1+1
               mov si,offset str1
-
               next: inc si
                     dec cl
                     jnz next
@@ -134,16 +133,14 @@ start:
 
               jmp again
 
-        case4: 
+        case4:
                cmp bl,"4"
                jne case5
-               
-                
-        case5:
-               cmp bl,"5"
-               jne case6
                jmp exit
-
+        case5:
+               print error
+               print empty
+               jmp again
         exit:
                 mov ah,4ch
                 int 21h

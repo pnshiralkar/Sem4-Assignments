@@ -6,8 +6,6 @@ endm
 
 .model small
 
-
-;******  Data Segment ******
 .data
 
 menu db 10,13, "Menu: "
