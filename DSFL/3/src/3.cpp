@@ -6,13 +6,14 @@
 // Description : Hello World in C++, Ansi-style
 //============================================================================
 
-#include <iostream>
+#include <bits/stdc++.h>
 #include "binaryTree.h"
 #include "binaryTree.cpp"
 using namespace std;
 
 int main() {
 	binaryTree tree;
+	node *copy;
 	int n;
 	int f=1;
 	int ch;
@@ -28,7 +29,27 @@ int main() {
 				tree.insert(n);
 				break;
 			case 2:
-				tree.display();
+				tree.display(tree.getRoot());
+				break;
+			case 3:
+				cout<<"Depth of given tree is:- "<<tree.depth(tree.getRoot())<<endl;
+				break;
+			case 4:
+				tree.displayLeaf(tree.getRoot());
+				break;
+			case 5:
+				copy = tree.copyTree(tree.getRoot());
+				cout<<"\n\nTree copied successfully";
+				cout<<"\n\nOriginal Tree:- ";
+				tree.display(tree.getRoot());
+				cout<<"\n\nCopied Tree:- ";
+				tree.display(tree.getRoot());
+				break;
+			case 6: 
+				f=0;
+			
+				
+
 
 		}
 	}

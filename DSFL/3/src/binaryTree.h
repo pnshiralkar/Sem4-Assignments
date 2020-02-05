@@ -20,7 +20,14 @@ public:
 	binaryTree();
 	void Insert(int key, node *leaf);
     void insert(int key);
-    void display();
+    void display(node* );
+	node* getRoot();
+	int isempty();
+	int depth(node*);
+	void displayLeaf(node*);
+	node* copyTree(node*);
+
+	
 
 
 
