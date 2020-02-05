@@ -1,6 +1,7 @@
 #include <iostream>
 using namespace std;
-
+#include "BinTree.h"
+#include "BinTree.cpp"
 template <class T>
 class Node{
 public:
