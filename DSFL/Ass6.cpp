@@ -7,6 +7,8 @@
 //============================================================================
 
 #include <iostream>
+#include <queue>
+#include <stack>
 using namespace std;
 
 typedef struct _{
@@ -29,6 +31,7 @@ public:
 	int comments;
 	friendNode *lnk;
 	Node *nxt;
+	bool visited;
 
 	Node(){
 	    pk=0;
@@ -39,6 +42,7 @@ public:
 		comments = 0;
 		lnk = NULL;
 		nxt = NULL;
+		visited = false;
 	}
 	Node(int pk, string name, Dob dob, int comments){
 		this->pk=pk;
@@ -47,6 +51,7 @@ public:
 		this->comments = comments;
 		lnk = NULL;
 		nxt = NULL;
+		visited = false;
 	}
 };
 
@@ -133,23 +138,103 @@ public:
 	    }
 	    return *maxn;
 	}
+	
+	void resetVisited()
+	{
+		for(Node *i=head;i;i=i->nxt)
+			i->visited = false;
+	}
+	
+	Node maxComments(){
+	    int maxn=0;
+	    queue<Node *> q;
+	    Node *max;
+	    q.push(head);
+	    head->visited = true;
+	    while(!q.empty()){
+	        Node *c = q.front();
+	        friendNode *i=c->lnk;
+	        q.pop();
+	        while(i){
+	        	if(!(i->user->visited)){
+			        q.push(i->user);
+			        i->user->visited = true;
+	            }
+		        i=i->nxt;
+	        }
+	        if(c->comments > maxn){
+	            maxn = c->comments;
+	            max = c;
+	        }
+	    }
+	    resetVisited();
+	    return *max;
+	}
+	
+	void bdInMonth(int month)
+	{
+	    stack<Node *> q;
+	    q.push(head);
+	    head->visited = true;
+	    while(!q.empty()){
+	        Node *c = q.top();
+	        friendNode *i=c->lnk;
+	        q.pop();
+	        while(i){
+	        	if(!(i->user->visited)){
+			        q.push(i->user);
+			        i->user->visited = true;
+	            }
+		        i=i->nxt;
+	        }
+	        if(c->dob.month == month){
+	            cout << c->name << endl;
+	        }
+	    }
+	    resetVisited();
+	}
 };
+
+int menu()
+{
+	int r;
+	cout << "\n\n***** Facebook *****\n\n\
+    1. Create Account\n\
+    2. See who's on Facebook\n\
+    3. Add Friends\n\
+    4. View Profile\n\
+    5. Get user with max friends\n\
+    6. Get user with max comments\n\
+    7. Get users with birthdays in given month\n\
+    8. Exit\n\
+        Your Choice : ";
+	cin>>r;
+	return r;
+}
 
 int main() {
     Facebook fb;
 
     Node *user;
     Dob dob;
-    dob.date = 4;
-    dob.month = 12;
-    dob.year = 1999;
-    int n;
-    cin>>n;
-    for(int i=1;i<=n;i++)
-        fb.addUser("User" + to_string(i), dob, 3);
-    fb.beFriend(1, 2);
-    fb.beFriend(1, 3);
-    fb.disp();
-    cout << fb.maxFriends().name << " has maximum friends\n";
-	return 0;
+    
+    switch(menu())
+    {
+    	
+    }
+//     dob.date = 4;
+//     dob.month = 12;
+//     dob.year = 1999;
+//     int n;
+//     cin>>n;
+//     for(int i=1;i<=n;i++)
+//         fb.addUser("User" + to_string(i), dob, 3*i+!(i%2));
+//     fb.beFriend(1, 2);
+//     fb.beFriend(1, 3);
+//     fb.disp();
+//     cout << fb.maxFriends().name << " has maximum friends\n";
+//     cout << fb.maxComments().name << " has maximum comments\n";
+//     cout << "Birthdays in given month are : " << endl;
+//     fb.bdInMonth(12);
+ 	return 0;
 }
